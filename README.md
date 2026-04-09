@@ -8,21 +8,7 @@ This is a Password Generator project that creates secure passwords of customizab
 - Include uppercase letters, lowercase letters, numbers, and special characters.
 - Option to generate passphrases for easier memorization.
 
-## Installation Instructions
-1. Clone the repository:
-   ```
-   git clone https://github.com/harsh123-code/password-generator.git
-   ```
-2. Navigate to the project directory:
-   ```
-   cd password-generator
-   ```
-3. Install dependencies (if any):
-   ```
-   npm install
-   ```
-
-## Usage Examples
+## Usage Example
 - To generate a simple password:
    ```
    python generate_password.py 12
@@ -47,10 +33,6 @@ This is a Password Generator project that creates secure passwords of customizab
    git push origin feature-name
    ```
 5. Create a pull request.
+   # Password Generator
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-*Last updated: 2026-04-09 16:06:16 UTC*
+![VSCode Screenshot](./screenshots/password-generator.png)
