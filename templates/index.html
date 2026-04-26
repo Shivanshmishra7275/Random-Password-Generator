@@ -29,93 +29,28 @@
     </header>
 
     <section class="creator-strip reveal" aria-label="Project creator and team credits">
-        <div class="creator-copy">
+        <div class="creator-copy simple-copy">
             <p class="creator-label">Built with intent</p>
             <h2>Made by Shivansh Mishra</h2>
-            <p>
-                A polished security utility web app designed and led by Shivansh Mishra with a focused team.
-                Hover or tap the cards below to meet the contributors.
-            </p>
+            <p>Leader: Shivansh Mishra • Team: Ravi Gupta, Harshvardhan Sisodiya, Vishal Patel, Dhuru Madhuwal</p>
             <div class="creator-actions">
-                <span class="creator-pill">Lead Architect</span>
+                <span class="creator-pill">Secure and deploy-ready toolkit</span>
                 <button class="btn btn-small btn-ghost" id="copyCredit" type="button">Copy Credit</button>
             </div>
         </div>
-        <div class="creator-team" id="teamCredits">
-            <article class="team-card leader-card">
-                <span class="team-role leader-role">Founder & Leader</span>
-                <strong class="leader-name">Shivansh Mishra</strong>
-                <small>Product direction, architecture, and UI polish</small>
-            </article>
-            <article class="team-card">
-                <span class="team-role">Member</span>
-                <strong>Ravi Gupta</strong>
-                <small>Feature support and workflow refinement</small>
-            </article>
-            <article class="team-card">
-                <span class="team-role">Member</span>
-                <strong>Harshvardhan Sisodiya</strong>
-                <small>Quality control and interface feedback</small>
-            </article>
-            <article class="team-card">
-                <span class="team-role">Member</span>
-                <strong>Vishal Patel</strong>
-                <small>Feature testing and UX iteration</small>
-            </article>
-            <article class="team-card">
-                <span class="team-role">Member</span>
-                <strong>Dhuru Madhuwal</strong>
-                <small>Deployment support and verification</small>
-            </article>
-        </div>
     </section>
 
-        <section class="proof-strip reveal" aria-label="Open source proof and author identities">
-            <div class="proof-copy">
-                <p class="creator-label">Open-source proof</p>
-                <h3>Verified creator identity</h3>
-                <p>
-                    This project is maintained as an active GitHub repo and credited to Shivansh Mishra across the web app and docs.
-                </p>
-            </div>
-            <div class="proof-actions">
-                <span class="proof-pill">GitHub: Shivansh-mishraji</span>
-                <span class="proof-pill">GitHub: Shivanshmishra7275</span>
-                <button class="btn btn-small btn-ghost" id="copyProof" type="button">Copy Proof</button>
-            </div>
-        </section>
+    <main id="mainContent">
 
-        <section class="status-strip reveal" aria-label="Project status and delivery highlights">
-            <article class="status-card">
-                <span class="status-kicker">Production Ready</span>
-                <strong>Flask + Gunicorn</strong>
-                <p>Fast local dev, clean deployment entrypoints, and a stable API surface.</p>
-            </article>
-            <article class="status-card">
-                <span class="status-kicker">Deployment Ready</span>
-                <strong>Render + Vercel</strong>
-                <p>Configured for quick cloud hosting with zero manual rewrite work.</p>
-            </article>
-            <article class="status-card">
-                <span class="status-kicker">Accessible UI</span>
-                <strong>Skip link + keyboard flow</strong>
-                <p>Better navigation, crisp hierarchy, and a more polished reading path.</p>
-            </article>
-            <button class="btn btn-small btn-ghost status-action" id="copyDeploy" type="button">Copy Deploy Note</button>
-        </section>
-
-        <main id="mainContent">
         <section class="hero reveal">
             <div class="hero-copy">
-                <p class="eyebrow">🚀 Animated Multipurpose Security WebStack</p>
-                <h2>Build stronger digital habits with a high-energy, utility-first web experience.</h2>
-                <p class="subtext">
-                    Generate robust passwords, craft memorable passphrases, hash any text, and keep a private session vault of your generated values.
-                </p>
+                <p class="eyebrow">🚀 Security WebStack</p>
+                <h2>Simple tools for strong passwords, passphrases, hashing, and quick verification.</h2>
+                <p class="subtext">Generate secure values fast and review live telemetry in one compact workspace.</p>
                 <div class="hero-badges">
-                    <span>⚡ Fast Workflows</span>
-                    <span>🛡 Secure by Design</span>
-                    <span>📊 Visual Intelligence</span>
+                    <span>⚡ Fast</span>
+                    <span>🛡 Secure</span>
+                    <span>📊 Live Score</span>
                 </div>
                 <div class="hero-actions">
                     <button class="btn btn-primary" id="quickGenerate">⚡ Quick Generate</button>
@@ -148,22 +83,7 @@
                         <p><span>Unique Chars 🧬</span><strong id="uniqueValue">0</strong></p>
                         <p><span>Vault Items 📦</span><strong id="vaultCountValue">0</strong></p>
                     </div>
-                    <div class="composition-grid">
-                        <div class="comp-row"><span>a-z</span><span class="comp-track"><span id="barLower" class="bar-fill bar-lower"></span></span></div>
-                        <div class="comp-row"><span>A-Z</span><span class="comp-track"><span id="barUpper" class="bar-fill bar-upper"></span></span></div>
-                        <div class="comp-row"><span>0-9</span><span class="comp-track"><span id="barDigits" class="bar-fill bar-digits"></span></span></div>
-                        <div class="comp-row"><span>Sym</span><span class="comp-track"><span id="barSymbols" class="bar-fill bar-symbols"></span></span></div>
-                    </div>
-                    <div class="chart-grid">
-                        <div class="chart-panel">
-                            <p class="chart-title">🧩 Character Mix</p>
-                            <canvas id="mixChart" aria-label="Character composition chart"></canvas>
-                        </div>
-                        <div class="chart-panel">
-                            <p class="chart-title">📉 Strength Timeline</p>
-                            <canvas id="trendChart" aria-label="Strength history chart"></canvas>
-                        </div>
-                    </div>
+                    <p id="telemetryHint" class="status">Telemetry updates after each generated password or passphrase.</p>
                 </div>
             </div>
         </section>
@@ -333,7 +253,6 @@
             <p class="footer-note">Built for secure workflows, polished presentation, and easy deployment.</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script src="{{ url_for('static', filename='app.js') }}" defer></script>
 </body>
 </html>

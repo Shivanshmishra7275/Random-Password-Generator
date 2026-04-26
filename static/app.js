@@ -11,8 +11,6 @@ const elements = {
     copyPassword: byId("copyPassword"),
     copyBatch: byId("copyBatch"),
     copyCredit: byId("copyCredit"),
-    copyProof: byId("copyProof"),
-    copyDeploy: byId("copyDeploy"),
     quickGenerate: byId("quickGenerate"),
     batchCount: byId("batchCount"),
     generateBatch: byId("generateBatch"),
@@ -38,23 +36,17 @@ const elements = {
     entropyValue: byId("entropyValue"),
     uniqueValue: byId("uniqueValue"),
     vaultCountValue: byId("vaultCountValue"),
-    barLower: byId("barLower"),
-    barUpper: byId("barUpper"),
-    barDigits: byId("barDigits"),
-    barSymbols: byId("barSymbols"),
-    mixChart: byId("mixChart"),
-    trendChart: byId("trendChart"),
 };
 
 const vaultKey = "shivansh-security-vault";
 let securityTips = [];
 let tipCursor = 0;
 const ringCircumference = 326.73;
-const scoreHistory = [];
-const maxHistoryPoints = 10;
-
-let mixChartInstance = null;
-let trendChartInstance = null;
+const on = (element, eventName, handler) => {
+    if (element) {
+        element.addEventListener(eventName, handler);
+    }
+};
 
 const colorForScore = (score) => {
     if (score >= 85) return "#5df3b2";
@@ -108,122 +100,6 @@ const analyzeSecret = (value) => {
     };
 };
 
-const setBar = (element, value) => {
-    if (!element) {
-        return;
-    }
-    const bounded = Math.max(0, Math.min(100, Number(value) || 0));
-    element.style.width = `${bounded}%`;
-};
-
-const initializeCharts = () => {
-    if (typeof Chart === "undefined") {
-        return;
-    }
-
-    if (elements.mixChart) {
-        mixChartInstance = new Chart(elements.mixChart, {
-            type: "doughnut",
-            data: {
-                labels: ["Lower", "Upper", "Digits", "Symbols"],
-                datasets: [
-                    {
-                        data: [0, 0, 0, 0],
-                        backgroundColor: ["#57bcff", "#6f9bff", "#63f2c0", "#ffba6a"],
-                        borderWidth: 0,
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: "62%",
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: (context) => `${context.label}: ${context.parsed}%`,
-                        },
-                    },
-                },
-            },
-        });
-    }
-
-    if (elements.trendChart) {
-        trendChartInstance = new Chart(elements.trendChart, {
-            type: "line",
-            data: {
-                labels: [],
-                datasets: [
-                    {
-                        label: "Strength",
-                        data: [],
-                        borderColor: "#57e5c8",
-                        backgroundColor: "rgba(87, 229, 200, 0.18)",
-                        tension: 0.35,
-                        fill: true,
-                        pointRadius: 2.6,
-                        pointBackgroundColor: "#ffba6a",
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        grid: { display: false },
-                        ticks: { display: false },
-                    },
-                    y: {
-                        min: 0,
-                        max: 100,
-                        ticks: {
-                            color: "rgba(210, 227, 255, 0.62)",
-                            font: { size: 10 },
-                        },
-                        grid: {
-                            color: "rgba(150, 190, 255, 0.12)",
-                        },
-                    },
-                },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: (context) => `Score ${context.parsed.y}`,
-                        },
-                    },
-                },
-            },
-        });
-    }
-};
-
-const updateCharts = (stats, score) => {
-    if (mixChartInstance) {
-        mixChartInstance.data.datasets[0].data = [
-            stats.lowerPct,
-            stats.upperPct,
-            stats.digitsPct,
-            stats.symbolsPct,
-        ];
-        mixChartInstance.update("none");
-    }
-
-    if (trendChartInstance) {
-        scoreHistory.push(Math.round(score));
-        if (scoreHistory.length > maxHistoryPoints) {
-            scoreHistory.shift();
-        }
-
-        trendChartInstance.data.labels = scoreHistory.map((_, index) => `#${index + 1}`);
-        trendChartInstance.data.datasets[0].data = [...scoreHistory];
-        trendChartInstance.update("none");
-    }
-};
-
 const updateTelemetry = (secretValue, scoreValue) => {
     const score = Math.max(0, Math.min(100, Number(scoreValue) || 0));
     const ringOffset = ringCircumference * (1 - score / 100);
@@ -245,12 +121,6 @@ const updateTelemetry = (secretValue, scoreValue) => {
     if (elements.uniqueValue) {
         elements.uniqueValue.textContent = String(stats.unique);
     }
-
-    setBar(elements.barLower, stats.lowerPct);
-    setBar(elements.barUpper, stats.upperPct);
-    setBar(elements.barDigits, stats.digitsPct);
-    setBar(elements.barSymbols, stats.symbolsPct);
-    updateCharts(stats, score);
 };
 
 const showToast = (text) => {
@@ -637,11 +507,11 @@ const setupCanvas = () => {
     });
 };
 
-elements.length.addEventListener("input", () => {
+on(elements.length, "input", () => {
     elements.lengthValue.textContent = elements.length.value;
 });
 
-elements.passwordForm.addEventListener("submit", async (event) => {
+on(elements.passwordForm, "submit", async (event) => {
     event.preventDefault();
     try {
         await generatePassword(passwordPayloadFromForm());
@@ -650,7 +520,7 @@ elements.passwordForm.addEventListener("submit", async (event) => {
     }
 });
 
-elements.quickGenerate.addEventListener("click", async () => {
+on(elements.quickGenerate, "click", async () => {
     try {
         await generatePassword({
             length: 20,
@@ -667,7 +537,7 @@ elements.quickGenerate.addEventListener("click", async () => {
     }
 });
 
-elements.generateBatch.addEventListener("click", async () => {
+on(elements.generateBatch, "click", async () => {
     try {
         await generateBatch();
     } catch (error) {
@@ -675,7 +545,7 @@ elements.generateBatch.addEventListener("click", async () => {
     }
 });
 
-elements.passphraseForm.addEventListener("submit", async (event) => {
+on(elements.passphraseForm, "submit", async (event) => {
     event.preventDefault();
     try {
         await generatePassphrase();
@@ -684,7 +554,7 @@ elements.passphraseForm.addEventListener("submit", async (event) => {
     }
 });
 
-elements.hashForm.addEventListener("submit", async (event) => {
+on(elements.hashForm, "submit", async (event) => {
     event.preventDefault();
     try {
         await generateHash();
@@ -693,7 +563,7 @@ elements.hashForm.addEventListener("submit", async (event) => {
     }
 });
 
-elements.hashVerifyForm.addEventListener("submit", async (event) => {
+on(elements.hashVerifyForm, "submit", async (event) => {
     event.preventDefault();
     try {
         await verifyHash();
@@ -702,22 +572,20 @@ elements.hashVerifyForm.addEventListener("submit", async (event) => {
     }
 });
 
-elements.copyPassword.addEventListener("click", () => copyText(elements.passwordOutput.textContent));
-elements.copyCredit.addEventListener("click", () => copyText("Made by Shivansh Mishra | Lead Architect, Multipurpose Security WebStack"));
-elements.copyProof.addEventListener("click", () => copyText("Made by Shivansh Mishra | GitHub: Shivansh-mishraji, Shivanshmishra7275"));
-elements.copyDeploy.addEventListener("click", () => copyText("Render: use Procfile + gunicorn wsgi:app | Vercel: import repo and deploy with vercel.json routing"));
-elements.copyBatch.addEventListener("click", () => {
+on(elements.copyPassword, "click", () => copyText(elements.passwordOutput.textContent));
+on(elements.copyCredit, "click", () => copyText("Made by Shivansh Mishra | Lead Architect, Multipurpose Security WebStack"));
+on(elements.copyBatch, "click", () => {
     const values = Array.from(elements.batchOutput.querySelectorAll("li"))
         .map((li) => li.textContent)
         .join("\n");
     copyText(values);
 });
-elements.copyPassphrase.addEventListener("click", () => copyText(elements.passphraseOutput.textContent));
-elements.copyHash.addEventListener("click", () => copyText(elements.hashOutput.textContent));
-elements.exportVault.addEventListener("click", exportVault);
-elements.importVault.addEventListener("change", importVault);
+on(elements.copyPassphrase, "click", () => copyText(elements.passphraseOutput.textContent));
+on(elements.copyHash, "click", () => copyText(elements.hashOutput.textContent));
+on(elements.exportVault, "click", exportVault);
+on(elements.importVault, "change", importVault);
 
-elements.clearVault.addEventListener("click", () => {
+on(elements.clearVault, "click", () => {
     writeVault([]);
     renderVault();
     showToast("🧹 Vault cleared.");
@@ -727,7 +595,6 @@ setupObserver();
 setupTeamInteractions();
 setupTips();
 setupCanvas();
-initializeCharts();
 renderVault();
 updateTelemetry("", 0);
 renderWarnings([]);
