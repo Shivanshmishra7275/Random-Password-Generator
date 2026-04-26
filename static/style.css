@@ -149,6 +149,26 @@ body::after {
     transform: translateY(-1px);
 }
 
+.skip-link {
+    position: absolute;
+    left: 50%;
+    top: -48px;
+    transform: translateX(-50%);
+    z-index: 30;
+    padding: 0.55rem 0.85rem;
+    border-radius: 999px;
+    background: #0d1d31;
+    color: var(--text-main);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    font-size: 0.86rem;
+    transition: top 180ms ease;
+}
+
+.skip-link:focus {
+    top: 12px;
+}
+
 .creator-strip {
     width: min(1160px, 92vw);
     margin: 1rem auto 0;
@@ -264,6 +284,50 @@ body::after {
     background: rgba(255, 255, 255, 0.04);
     color: #dce9ff;
     font-size: 0.78rem;
+}
+
+.status-strip {
+    width: min(1160px, 92vw);
+    margin: 0.9rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    gap: 0.65rem;
+    align-items: stretch;
+}
+
+.status-card {
+    border: 1px solid var(--soft-line);
+    border-radius: 18px;
+    padding: 0.9rem;
+    background: rgba(255, 255, 255, 0.04);
+    display: grid;
+    gap: 0.3rem;
+    min-height: 116px;
+    box-shadow: var(--shadow-soft);
+}
+
+.status-kicker {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent-c);
+}
+
+.status-card strong {
+    font-family: "Sora", sans-serif;
+    font-size: 1rem;
+}
+
+.status-card p {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.45;
+}
+
+.status-action {
+    align-self: center;
+    justify-self: end;
+    white-space: nowrap;
 }
 
 .team-card {
@@ -959,6 +1023,10 @@ textarea {
         grid-template-columns: 1fr 1fr;
     }
 
+    .status-strip {
+        grid-template-columns: 1fr 1fr;
+    }
+
     .creator-team {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -973,6 +1041,14 @@ textarea {
 @media (max-width: 820px) {
     .hero-side {
         grid-template-columns: 1fr;
+    }
+
+    .status-strip {
+        grid-template-columns: 1fr;
+    }
+
+    .status-action {
+        justify-self: start;
     }
 
     .proof-strip {
