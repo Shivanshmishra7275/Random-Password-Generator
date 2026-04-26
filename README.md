@@ -1,25 +1,82 @@
-# 🔒 Advanced Password Generator
+# Multipurpose Security WebStack
 
-![Python](https://img.shields.io/badge/Python-3.12-blue)
-![Streamlit](https://img.shields.io/badge/Streamlit-App-FF4B4B)
+Production-ready, interactive security toolkit with a Flask API and animated frontend.
 
-A lightweight, secure, and interactive web application designed to generate strong, randomized passwords. This tool helps users enhance their digital security by creating complex passwords that are difficult to crack or guess.
+## Highlights
 
-🌐 **Live Demo:** [View the Web App Here](https://password-generatorgit-by-harshvardhan-and-shivansh.streamlit.app/)
+- Password Forge
+  - Advanced generation controls and live strength telemetry
+  - Security warning hints for weak pattern detection
+  - Single and batch password generation
+- Passphrase Studio
+  - Multi-word passphrase generation with formatting controls
+- Hash Lab
+  - SHA-256, SHA-512, SHA-1, MD5, BLAKE2b
+  - Digest verification workflow
+- Session Vault
+  - Local browser vault with export/import JSON support
+- Platform Readiness
+  - Production entrypoint with Gunicorn
+  - Render-compatible `Procfile`
+  - Vercel-compatible `vercel.json`
+  - Health endpoint: `/healthz`
 
-## ✨ Features
+## Architecture
 
-* **Interactive Web Interface:** Built with Streamlit for a clean, user-friendly, and modern GUI.
-* **Customizable Length:** Use the intuitive slider to generate passwords of any length (up to 128 characters).
-* **Character Diversity:** Toggle options to include uppercase/lowercase letters, numbers, and special symbols.
-* **Secure Randomization:** Uses Python's built-in randomization modules for high-entropy, secure output.
-* **One-Click Copying:** Easily view and copy the generated password directly from the screen.
+- Backend: Flask API (`Random_Password_Generator.py`)
+- Frontend: Server-rendered HTML + static JS/CSS
+- Security primitives: `secrets`, `hashlib`
+- Runtime: Python 3.12
 
-## 🚀 How to Run Locally
+## Local Development
 
-If you want to run this project on your own machine, follow these steps:
+1. Create and activate virtual environment.
+2. Install dependencies.
+3. Run app.
 
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/harsh123-code/password-generator.git](https://github.com/harsh123-code/password-generator.git)
-   cd password-generator
+```bash
+pip install -r requirements.txt
+python Random_Password_Generator.py
+```
+
+Open: http://127.0.0.1:5000
+
+## API Endpoints
+
+- `GET /healthz`
+- `GET /api/tips`
+- `POST /api/password`
+- `POST /api/password/batch`
+- `POST /api/passphrase`
+- `POST /api/hash`
+- `POST /api/hash/verify`
+
+## Deploy on Render
+
+1. Create a new Web Service from your GitHub repo.
+2. Render will detect:
+   - `requirements.txt`
+   - `Procfile` (`web: gunicorn wsgi:app`)
+3. Set build command:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Set start command (if needed):
+
+```bash
+gunicorn wsgi:app
+```
+
+## Deploy on Vercel
+
+1. Import repository in Vercel.
+2. Vercel uses `vercel.json` and routes all requests to `api/index.py`.
+3. Deploy directly.
+
+## Security Notes
+
+- Password generation uses cryptographically secure randomness.
+- Hashing is one-way and non-reversible.
+- Vault data remains in browser local storage unless manually exported.

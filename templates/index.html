@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shivansh Mishra | Multipurpose Security WebStack</title>
+    <meta name="description" content="Animated multipurpose security toolkit by Shivansh Mishra with password generation, passphrases, hashing, and practical security guidance." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+    <canvas id="nebulaCanvas" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="topbar">
+        <div class="brand-wrap">
+            <p class="brand-eyebrow">Designed & Developed By</p>
+            <h1 class="brand-name">Shivansh Mishra</h1>
+        </div>
+        <nav class="nav-links">
+            <a href="#generator">🔐 Password</a>
+            <a href="#passphrase">🧠 Passphrase</a>
+            <a href="#hashlab">🧪 Hash Lab</a>
+            <a href="#vault">🗂 Vault</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero reveal">
+            <div class="hero-copy">
+                <p class="eyebrow">🚀 Animated Multipurpose Security WebStack</p>
+                <h2>Build stronger digital habits with a high-energy, utility-first web experience.</h2>
+                <p class="subtext">
+                    Generate robust passwords, craft memorable passphrases, hash any text, and keep a private session vault of your generated values.
+                </p>
+                <div class="hero-badges">
+                    <span>⚡ Fast Workflows</span>
+                    <span>🛡 Secure by Design</span>
+                    <span>📊 Visual Intelligence</span>
+                </div>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" id="quickGenerate">⚡ Quick Generate</button>
+                    <a class="btn btn-ghost" href="#generator">🎛 Open Security Studio</a>
+                </div>
+            </div>
+            <div class="hero-side">
+                <div class="hero-tip-card">
+                    <p class="tip-label">💡 Live Security Tip</p>
+                    <p id="rotatingTip">Loading practical guidance...</p>
+                    <div class="pulse-dot"></div>
+                </div>
+                <div class="telemetry-card">
+                    <div class="telemetry-head">
+                        <p class="tip-label">📈 Security Telemetry</p>
+                        <span class="telemetry-live">LIVE</span>
+                    </div>
+                    <div class="score-ring-wrap">
+                        <svg class="score-ring" viewBox="0 0 140 140" aria-hidden="true">
+                            <circle class="ring-bg" cx="70" cy="70" r="52"></circle>
+                            <circle id="heroScoreRing" class="ring-fg" cx="70" cy="70" r="52"></circle>
+                        </svg>
+                        <div class="score-center">
+                            <strong id="heroScoreValue">0</strong>
+                            <span>score</span>
+                        </div>
+                    </div>
+                    <div class="telemetry-metrics">
+                        <p><span>Entropy 🔥</span><strong id="entropyValue">0 bits</strong></p>
+                        <p><span>Unique Chars 🧬</span><strong id="uniqueValue">0</strong></p>
+                        <p><span>Vault Items 📦</span><strong id="vaultCountValue">0</strong></p>
+                    </div>
+                    <div class="composition-grid">
+                        <div class="comp-row"><span>a-z</span><span class="comp-track"><span id="barLower" class="bar-fill bar-lower"></span></span></div>
+                        <div class="comp-row"><span>A-Z</span><span class="comp-track"><span id="barUpper" class="bar-fill bar-upper"></span></span></div>
+                        <div class="comp-row"><span>0-9</span><span class="comp-track"><span id="barDigits" class="bar-fill bar-digits"></span></span></div>
+                        <div class="comp-row"><span>Sym</span><span class="comp-track"><span id="barSymbols" class="bar-fill bar-symbols"></span></span></div>
+                    </div>
+                    <div class="chart-grid">
+                        <div class="chart-panel">
+                            <p class="chart-title">🧩 Character Mix</p>
+                            <canvas id="mixChart" aria-label="Character composition chart"></canvas>
+                        </div>
+                        <div class="chart-panel">
+                            <p class="chart-title">📉 Strength Timeline</p>
+                            <canvas id="trendChart" aria-label="Strength history chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="generator" class="card reveal">
+            <div class="card-head">
+                <h3>🔐 Password Forge</h3>
+                <p>Fine-tune password complexity with modern controls and instant strength analysis.</p>
+            </div>
+            <form id="passwordForm" class="form-grid">
+                <label>
+                    Length
+                    <div class="range-wrap">
+                        <input type="range" id="length" min="4" max="128" value="20" />
+                        <span id="lengthValue">20</span>
+                    </div>
+                </label>
+
+                <label class="check"><input type="checkbox" id="lowercase" checked /> Lowercase</label>
+                <label class="check"><input type="checkbox" id="uppercase" checked /> Uppercase</label>
+                <label class="check"><input type="checkbox" id="digits" checked /> Numbers</label>
+                <label class="check"><input type="checkbox" id="symbols" checked /> Symbols</label>
+                <label class="check"><input type="checkbox" id="excludeAmbiguous" /> Exclude ambiguous (l, I, 1, O, 0)</label>
+                <label class="check"><input type="checkbox" id="avoidRepeats" /> Avoid repeated characters</label>
+
+                <label>
+                    Custom Symbols (optional)
+                    <input type="text" id="customSymbols" placeholder="Example: !@#$" maxlength="30" />
+                </label>
+
+                <label>
+                    Exclude Characters (optional)
+                    <input type="text" id="excludeChars" placeholder="Example: abcXYZ" maxlength="40" />
+                </label>
+
+                <button class="btn btn-primary" type="submit">✨ Generate Password</button>
+            </form>
+
+            <div class="output-wrap">
+                <div class="output-head">
+                    <h4>Generated Password 🔑</h4>
+                    <button id="copyPassword" class="btn btn-small" type="button">📋 Copy</button>
+                </div>
+                <p id="passwordOutput" class="output-box">No password generated yet.</p>
+                <div class="meter-track">
+                    <div id="strengthMeter" class="meter-fill"></div>
+                </div>
+                <p id="strengthLabel" class="status">Strength: waiting...</p>
+                <ul id="passwordWarnings" class="warning-list"></ul>
+            </div>
+
+            <div class="output-wrap">
+                <div class="output-head">
+                    <h4>Batch Generator ⚙️</h4>
+                    <button id="copyBatch" class="btn btn-small" type="button">📋 Copy List</button>
+                </div>
+                <div class="batch-controls">
+                    <label>
+                        Count
+                        <input type="number" id="batchCount" min="1" max="20" value="5" />
+                    </label>
+                    <button id="generateBatch" class="btn btn-ghost" type="button">Generate Batch</button>
+                </div>
+                <ol id="batchOutput" class="batch-list"></ol>
+            </div>
+        </section>
+
+        <section id="passphrase" class="card reveal">
+            <div class="card-head">
+                <h3>🧠 Passphrase Studio</h3>
+                <p>Create memorable multi-word passphrases for easier recall with strong resilience.</p>
+            </div>
+            <form id="passphraseForm" class="form-grid compact">
+                <label>
+                    Number of words
+                    <input type="number" id="wordCount" min="2" max="8" value="4" />
+                </label>
+
+                <label>
+                    Separator
+                    <select id="separator">
+                        <option value="-">Dash (-)</option>
+                        <option value="_">Underscore (_)</option>
+                        <option value=".">Dot (.)</option>
+                        <option value="~">Tilde (~)</option>
+                    </select>
+                </label>
+
+                <label class="check"><input type="checkbox" id="includeNumber" checked /> Append a random number</label>
+                <label class="check"><input type="checkbox" id="titleCase" /> Title Case words</label>
+
+                <button class="btn btn-primary" type="submit">✨ Generate Passphrase</button>
+            </form>
+            <div class="output-wrap">
+                <div class="output-head">
+                    <h4>Generated Passphrase 🧩</h4>
+                    <button id="copyPassphrase" class="btn btn-small" type="button">📋 Copy</button>
+                </div>
+                <p id="passphraseOutput" class="output-box">No passphrase generated yet.</p>
+                <p id="passphraseStrength" class="status">Strength: waiting...</p>
+            </div>
+        </section>
+
+        <section id="hashlab" class="card reveal">
+            <div class="card-head">
+                <h3>🧪 Hash Lab</h3>
+                <p>Generate message digests for signatures, comparisons, and integrity workflows.</p>
+            </div>
+            <form id="hashForm" class="form-grid compact">
+                <label>
+                    Hash algorithm
+                    <select id="hashAlgorithm">
+                        <option value="sha256">SHA-256</option>
+                        <option value="sha512">SHA-512</option>
+                        <option value="sha1">SHA-1</option>
+                        <option value="md5">MD5</option>
+                        <option value="blake2b">BLAKE2b</option>
+                    </select>
+                </label>
+
+                <label>
+                    Text to hash
+                    <textarea id="hashInput" rows="4" placeholder="Type or paste text here..."></textarea>
+                </label>
+
+                <button class="btn btn-primary" type="submit">✨ Generate Hash</button>
+            </form>
+            <div class="output-wrap">
+                <div class="output-head">
+                    <h4>Digest Output 🧾</h4>
+                    <button id="copyHash" class="btn btn-small" type="button">📋 Copy</button>
+                </div>
+                <p id="hashOutput" class="output-box">No hash generated yet.</p>
+            </div>
+
+            <form id="hashVerifyForm" class="form-grid compact verify-form">
+                <label>
+                    Verify Text
+                    <textarea id="verifyText" rows="3" placeholder="Text to verify against digest..."></textarea>
+                </label>
+                <label>
+                    Expected Digest
+                    <textarea id="verifyDigest" rows="3" placeholder="Paste expected hash digest..."></textarea>
+                </label>
+                <button class="btn btn-ghost" type="submit">✅ Verify Digest</button>
+                <p id="verifyResult" class="status">Verification: waiting...</p>
+            </form>
+        </section>
+
+        <section id="vault" class="card reveal">
+            <div class="card-head">
+                <h3>🗂 Session Vault</h3>
+                <p>Temporary browser-only history of generated values to speed up your workflow.</p>
+            </div>
+            <div class="vault-actions">
+                <button class="btn btn-ghost" id="clearVault" type="button">🧹 Clear Vault</button>
+                <button class="btn btn-ghost" id="exportVault" type="button">⬇ Export</button>
+                <label class="btn btn-ghost file-action" for="importVault">⬆ Import</label>
+                <input id="importVault" type="file" accept="application/json" />
+            </div>
+            <ul id="vaultList" class="vault-list"></ul>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Shivansh Mishra • Multipurpose Security WebStack • 2026</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</body>
+</html>
