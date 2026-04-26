@@ -504,6 +504,19 @@ const setupObserver = () => {
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 };
 
+const setupTeamInteractions = () => {
+    const teamCards = document.querySelectorAll(".team-card");
+    teamCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 90}ms`;
+        card.addEventListener("mouseenter", () => {
+            card.style.transform = "translateY(-4px) scale(1.01)";
+        });
+        card.addEventListener("mouseleave", () => {
+            card.style.transform = "";
+        });
+    });
+};
+
 const setupTips = async () => {
     try {
         const response = await fetch("/api/tips");
@@ -691,6 +704,7 @@ elements.clearVault.addEventListener("click", () => {
 });
 
 setupObserver();
+setupTeamInteractions();
 setupTips();
 setupCanvas();
 initializeCharts();

@@ -2,6 +2,15 @@
 
 Production-ready, interactive security toolkit with a Flask API and animated frontend.
 
+## Team
+
+- Leader: Shivansh Mishra
+- Team Members:
+  - Ravi Gupta
+  - Harshvardhan Sisodiya
+  - Vishal Patel
+  - Dhuru Madhuwal
+
 ## Highlights
 
 - Password Forge
@@ -71,9 +80,32 @@ gunicorn wsgi:app
 
 ## Deploy on Vercel
 
-1. Import repository in Vercel.
-2. Vercel uses `vercel.json` and routes all requests to `api/index.py`.
-3. Deploy directly.
+1. Push your latest code to GitHub:
+
+```bash
+git add -A
+git commit -m "docs: update team and deployment guide"
+git push origin main
+```
+
+2. Open Vercel dashboard: https://vercel.com/new
+3. Import this GitHub repository.
+4. Framework preset: `Other` (or leave auto-detect).
+5. Vercel will use `vercel.json` and route all requests to `api/index.py`.
+6. Click Deploy.
+
+After deployment:
+
+- Open `/healthz` on your live URL to confirm app status.
+- If you push new commits to `main`, Vercel auto-deploys updates.
+
+Optional Vercel CLI flow:
+
+```bash
+npm i -g vercel
+vercel login
+vercel --prod
+```
 
 ## Security Notes
 
