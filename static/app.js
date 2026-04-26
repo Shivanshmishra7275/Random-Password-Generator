@@ -493,6 +493,13 @@ const importVault = async (event) => {
 };
 
 const setupObserver = () => {
+    const revealTargets = document.querySelectorAll(".reveal");
+
+    if (!("IntersectionObserver" in window)) {
+        revealTargets.forEach((el) => el.classList.add("in"));
+        return;
+    }
+
     const observer = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
@@ -504,7 +511,7 @@ const setupObserver = () => {
         { threshold: 0.12 }
     );
 
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    revealTargets.forEach((el) => observer.observe(el));
 };
 
 const setupTeamInteractions = () => {
@@ -542,7 +549,14 @@ const setupTips = async () => {
 
 const setupCanvas = () => {
     const canvas = byId("nebulaCanvas");
+    if (!canvas || typeof canvas.getContext !== "function") {
+        return;
+    }
+
     const ctx = canvas.getContext("2d");
+    if (!ctx) {
+        return;
+    }
 
     let width = 0;
     let height = 0;
