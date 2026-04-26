@@ -212,7 +212,37 @@ body::after {
 }
 
 .leader-card {
-    background: linear-gradient(135deg, rgba(255, 186, 106, 0.14), rgba(87, 229, 200, 0.08));
+    background:
+        radial-gradient(circle at top right, rgba(255, 186, 106, 0.28), transparent 42%),
+        linear-gradient(135deg, rgba(255, 186, 106, 0.16), rgba(87, 229, 200, 0.1));
+    border-color: rgba(255, 186, 106, 0.38);
+    box-shadow: 0 18px 38px rgba(6, 10, 18, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.leader-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.08) 50%, transparent 80%);
+    transform: translateX(-120%);
+    transition: transform 600ms ease;
+}
+
+.leader-card:hover::before {
+    transform: translateX(120%);
+}
+
+.leader-role {
+    color: #ffe0b2;
+}
+
+.leader-name {
+    font-size: 1.12rem;
+    letter-spacing: 0.02em;
+    color: #fff4e2;
+    text-shadow: 0 0 18px rgba(255, 186, 106, 0.35);
 }
 
 .team-role {
