@@ -10,6 +10,7 @@ const elements = {
     passwordWarnings: byId("passwordWarnings"),
     copyPassword: byId("copyPassword"),
     copyBatch: byId("copyBatch"),
+    copyCredit: byId("copyCredit"),
     quickGenerate: byId("quickGenerate"),
     batchCount: byId("batchCount"),
     generateBatch: byId("generateBatch"),
@@ -686,6 +687,7 @@ elements.hashVerifyForm.addEventListener("submit", async (event) => {
 });
 
 elements.copyPassword.addEventListener("click", () => copyText(elements.passwordOutput.textContent));
+elements.copyCredit.addEventListener("click", () => copyText("Made by Shivansh Mishra | Lead Architect, Multipurpose Security WebStack"));
 elements.copyBatch.addEventListener("click", () => {
     const values = Array.from(elements.batchOutput.querySelectorAll("li"))
         .map((li) => li.textContent)

@@ -188,6 +188,28 @@ body::after {
     max-width: 72ch;
 }
 
+.creator-actions {
+    display: flex;
+    gap: 0.55rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 0.28rem;
+}
+
+.creator-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 186, 106, 0.36);
+    background: rgba(255, 186, 106, 0.08);
+    color: #ffe6bf;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
 .creator-team {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -239,7 +261,7 @@ body::after {
 }
 
 .leader-name {
-    font-size: 1.12rem;
+    font-size: 1.18rem;
     letter-spacing: 0.02em;
     color: #fff4e2;
     text-shadow: 0 0 18px rgba(255, 186, 106, 0.35);
